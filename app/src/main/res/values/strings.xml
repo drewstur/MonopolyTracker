@@ -4,5 +4,16 @@
     <string name="app_name">MonopolyTracker</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_current_game">currentGame</string>
+    <string name="title_activity_game_information">gameInformation</string>
+    <string name="namePlayer1">Enter name for Player 1</string>
+    <string name="namePlayer2">Enter name for Player 2</string>
+    <string name="namePlayer3">Enter name for Player 3</string>
+    <string name="namePlayer4">Enter name for Player 4</string>
+    <string name="namePlayer5">Enter name for Player 5</string>
+    <string name="namePlayer6">Enter name for Player 6</string>
+    <string name="namePlayer7">Enter name for Player 7</string>
+    <string name="namePlayer8">Enter name for Player 8</string>
+    <string name="startGame">Start Game</string>
 
 </resources>
