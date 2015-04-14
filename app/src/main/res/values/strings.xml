@@ -15,5 +15,6 @@
     <string name="namePlayer7">Enter name for Player 7</string>
     <string name="namePlayer8">Enter name for Player 8</string>
     <string name="startGame">Start Game</string>
+    <string name="enterPlayerTitle">Emter Player Names</string>
 
 </resources>
