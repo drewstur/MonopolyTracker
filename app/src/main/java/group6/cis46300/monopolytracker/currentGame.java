@@ -70,8 +70,17 @@ public class currentGame extends ActionBarActivity {
                     player8 = (namePlayer8.getText().toString());
                     players[7] = player8;
                 }
+
+
+              //  startActivity(new Intent(currentGame.this, gameInformation.class));
+                Intent intent = new Intent(currentGame.this, gameInformation.class);
+                String[] myStrings = players;
+                intent.putExtra("strings", myStrings);
+                startActivity(intent);
             }
+
         });
+
     }
 
 

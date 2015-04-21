@@ -1,11 +1,14 @@
 package group6.cis46300.monopolytracker;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.TextureView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 
 public class gameInformation extends ActionBarActivity {
@@ -14,6 +17,15 @@ public class gameInformation extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_information);
+
+        TextView test = (TextView)findViewById(R.id.textView);
+
+        Intent intent = getIntent();
+        String[] myStrings = intent.getStringArrayExtra("strings");
+        test.setText("" + myStrings[0]);
+
+
+
     }
 
 
