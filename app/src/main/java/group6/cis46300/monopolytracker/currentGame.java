@@ -48,34 +48,27 @@ public class currentGame extends ActionBarActivity {
                 }
                 if((namePlayer3.getText().toString()) != "") {
                     player3 = (namePlayer3.getText().toString());
-                    players[2] = player1;
+                    players[2] = player3;
                 }
                 if((namePlayer4.getText().toString()) != "") {
                     player4 = (namePlayer4.getText().toString());
-                    counter++;
+                    players[3] = player4;
                 }
                 if((namePlayer5.getText().toString()) != "") {
                     player5 = (namePlayer5.getText().toString());
-                    counter++;
+                    players[4] = player5;
                 }
                 if((namePlayer6.getText().toString()) != "") {
                     player6 = (namePlayer6.getText().toString());
-                    counter++;
+                    players[5] = player6;
                 }
                 if((namePlayer7.getText().toString()) != "") {
                     player7 = (namePlayer7.getText().toString());
-                    counter++;
+                    players[6] = player7;
                 }
                 if((namePlayer8.getText().toString()) != "") {
                     player8 = (namePlayer8.getText().toString());
-                    counter++;
-                }
-
-
-                String[] players = new String[counter];
-                for(int i = 0; i < counter-1; i++)
-                {
-                    players[i] = player[i]
+                    players[7] = player8;
                 }
             }
         });
