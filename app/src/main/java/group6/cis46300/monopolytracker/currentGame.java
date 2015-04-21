@@ -16,6 +16,7 @@ public class currentGame extends ActionBarActivity {
 
     String player1, player2, player3, player4, player5, player6, player7, player8;
     int counter = 0;
+    String[] players = new String[8];
 
 
     @Override
@@ -39,30 +40,43 @@ public class currentGame extends ActionBarActivity {
 
                 if((namePlayer1.getText().toString()) != "") {
                     player1 = (namePlayer1.getText().toString());
+                    players[0] = player1;
                 }
                 if((namePlayer2.getText().toString()) != "") {
                     player2 = (namePlayer2.getText().toString());
+                    players[1] = player2;
                 }
                 if((namePlayer3.getText().toString()) != "") {
                     player3 = (namePlayer3.getText().toString());
+                    players[2] = player1;
                 }
                 if((namePlayer4.getText().toString()) != "") {
                     player4 = (namePlayer4.getText().toString());
+                    counter++;
                 }
                 if((namePlayer5.getText().toString()) != "") {
                     player5 = (namePlayer5.getText().toString());
+                    counter++;
                 }
                 if((namePlayer6.getText().toString()) != "") {
                     player6 = (namePlayer6.getText().toString());
+                    counter++;
                 }
                 if((namePlayer7.getText().toString()) != "") {
                     player7 = (namePlayer7.getText().toString());
+                    counter++;
                 }
                 if((namePlayer8.getText().toString()) != "") {
                     player8 = (namePlayer8.getText().toString());
+                    counter++;
                 }
 
-                String[] players = new String;
+
+                String[] players = new String[counter];
+                for(int i = 0; i < counter-1; i++)
+                {
+                    players[i] = player[i]
+                }
             }
         });
     }
