@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.TextureView;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -18,15 +20,31 @@ public class gameInformation extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_information);
 
-        TextView test = (TextView)findViewById(R.id.textView);
+        listView = (ListView) findViewById(R.id.list);
 
         Intent intent = getIntent();
         String[] myStrings = intent.getStringArrayExtra("strings");
-        test.setText("" + myStrings[0]);
 
+        // Define a new Adapter
+        // First parameter - Context
+        // Second parameter - Layout for the row
+        // Third parameter - ID of the TextView to which the data is written
+        // Forth - the Array of data
 
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                R.layout.list_item, R.id.textView, myStrings);
 
+        // Assign adapter to ListView
+        listView.setAdapter(adapter);
+
+        //values[0] = "Test";
+       //adapter.notifyDataSetChanged();
+
+       // values[0] = "Test2";
+       // adapter.notifyDataSetChanged();
     }
+
+
 
 
 

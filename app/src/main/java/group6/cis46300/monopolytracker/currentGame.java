@@ -38,43 +38,57 @@ public class currentGame extends ActionBarActivity {
         startGame.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                if((namePlayer1.getText().toString()) != "") {
+                if((namePlayer1.getText().toString().trim().length()) != 0) {
                     player1 = (namePlayer1.getText().toString());
                     players[0] = player1;
+                    counter++;
                 }
-                if((namePlayer2.getText().toString()) != "") {
+                if((namePlayer2.getText().toString().trim().length()) != 0) {
                     player2 = (namePlayer2.getText().toString());
                     players[1] = player2;
+                    counter++;
                 }
-                if((namePlayer3.getText().toString()) != "") {
+                if((namePlayer3.getText().toString().trim().length()) != 0) {
                     player3 = (namePlayer3.getText().toString());
                     players[2] = player3;
+                    counter++;
                 }
-                if((namePlayer4.getText().toString()) != "") {
+                if((namePlayer4.getText().toString().trim().length()) != 0) {
                     player4 = (namePlayer4.getText().toString());
                     players[3] = player4;
+                    counter++;
                 }
-                if((namePlayer5.getText().toString()) != "") {
+                if((namePlayer5.getText().toString().trim().length()) != 0) {
                     player5 = (namePlayer5.getText().toString());
                     players[4] = player5;
+                    counter++;
                 }
-                if((namePlayer6.getText().toString()) != "") {
+                if((namePlayer6.getText().toString().trim().length()) != 0) {
                     player6 = (namePlayer6.getText().toString());
                     players[5] = player6;
+                    counter++;
                 }
-                if((namePlayer7.getText().toString()) != "") {
+                if((namePlayer7.getText().toString().trim().length()) != 0) {
                     player7 = (namePlayer7.getText().toString());
                     players[6] = player7;
+                    counter++;
                 }
-                if((namePlayer8.getText().toString()) != "") {
+                if((namePlayer8.getText().toString().trim().length()) != 0) {
                     player8 = (namePlayer8.getText().toString());
                     players[7] = player8;
+                    counter++;
                 }
 
+                String[] allPlayers = new String[counter];
+
+                for(int i = 0; i < counter; i++)
+                {
+                    allPlayers[i] = players[i];
+                }
 
               //  startActivity(new Intent(currentGame.this, gameInformation.class));
                 Intent intent = new Intent(currentGame.this, gameInformation.class);
-                String[] myStrings = players;
+                String[] myStrings = allPlayers;
                 intent.putExtra("strings", myStrings);
                 startActivity(intent);
             }
