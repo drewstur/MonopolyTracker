@@ -28,9 +28,15 @@ public class gameInformation extends ActionBarActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.list_item, R.id.textView, myStrings);
         listView.setAdapter(adapter);
 
+
+//hello how u iz?
+        //does it work this time?
+//testing again
+
         //values[0] = "Test";
        //adapter.notifyDataSetChanged();
 
+      
        // values[0] = "Test2";
        // adapter.notifyDataSetChanged();
     }
