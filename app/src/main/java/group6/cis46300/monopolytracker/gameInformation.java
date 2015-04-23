@@ -15,12 +15,15 @@ import android.widget.TextView;
 
 public class gameInformation extends ActionBarActivity {
     ListView listView ;
+    ListView moneyView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_information);
 
         listView = (ListView) findViewById(R.id.list);
+        moneyView = (ListView) findViewById(R.id.listView);
 
         Intent intent = getIntent();
         String[] myStrings = intent.getStringArrayExtra("strings");
@@ -28,21 +31,30 @@ public class gameInformation extends ActionBarActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.list_item, R.id.textView, myStrings);
         listView.setAdapter(adapter);
 
+        Integer[] moneyTracker = new Integer[myStrings.length];
+
+        for(int i = 0; i < moneyTracker.length; i++)
+        {
+            moneyTracker[i] = 1500;
+        }
+
+       ArrayAdapter<Integer> moneyAdapter = new ArrayAdapter<Integer>(this, R.layout.list_item, R.id.textView, moneyTracker);
+       moneyView.setAdapter(moneyAdapter);
+
+
+
+
 
 //hello how u iz?
         //does it work this time?
 //testing again
+//values[0] = "Test";
+//adapter.notifyDataSetChanged();
 
-        //values[0] = "Test";
-       //adapter.notifyDataSetChanged();
 
-      
-       // values[0] = "Test2";
-       // adapter.notifyDataSetChanged();
+// values[0] = "Test2";
+// adapter.notifyDataSetChanged();
     }
-
-
-
 
 
     @Override
