@@ -25,16 +25,7 @@ public class gameInformation extends ActionBarActivity {
         Intent intent = getIntent();
         String[] myStrings = intent.getStringArrayExtra("strings");
 
-        // Define a new Adapter
-        // First parameter - Context
-        // Second parameter - Layout for the row
-        // Third parameter - ID of the TextView to which the data is written
-        // Forth - the Array of data
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                R.layout.list_item, R.id.textView, myStrings);
-
-        // Assign adapter to ListView
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.list_item, R.id.textView, myStrings);
         listView.setAdapter(adapter);
 
         //values[0] = "Test";
