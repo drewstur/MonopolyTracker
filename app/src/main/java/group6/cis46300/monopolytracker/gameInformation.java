@@ -28,7 +28,7 @@ public class gameInformation extends ActionBarActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.list_item, R.id.textView, myStrings);
         listView.setAdapter(adapter);
 
-Hey drew typed this in here
+Hey drew typed this in hereasdfa
     }
 
 
