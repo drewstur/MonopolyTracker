@@ -79,12 +79,15 @@ public class currentGame extends ActionBarActivity {
                     counter++;
                 }
 
-                String[] allPlayers = new String[counter];
+                String[] allPlayers = new String[counter+2];
 
                 for(int i = 0; i < counter; i++)
                 {
                     allPlayers[i] = players[i];
                 }
+
+                allPlayers[counter] = "Community Chest";
+                allPlayers[counter+1] = "Banker";
 
               //  startActivity(new Intent(currentGame.this, gameInformation.class));
                 Intent intent = new Intent(currentGame.this, gameInformation.class);
