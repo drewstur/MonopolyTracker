@@ -1,6 +1,7 @@
 package group6.cis46300.monopolytracker;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -17,6 +18,7 @@ public class gameInformation extends ActionBarActivity {
     ListView listView ;
     ListView moneyView;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,7 +30,7 @@ public class gameInformation extends ActionBarActivity {
         Intent intent = getIntent();
         String[] myStrings = intent.getStringArrayExtra("strings");
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.list_item, R.id.textView, myStrings);
+       final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.list_item, R.id.textView, myStrings);
         listView.setAdapter(adapter);
 
         Integer[] moneyTracker = new Integer[myStrings.length];
@@ -41,7 +43,33 @@ public class gameInformation extends ActionBarActivity {
        ArrayAdapter<Integer> moneyAdapter = new ArrayAdapter<Integer>(this, R.layout.list_item, R.id.textView, moneyTracker);
        moneyView.setAdapter(moneyAdapter);
 
+        //set onclick listeners
+        //This is to select the payer, which will be highlighted.
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+               // adapter.notifyDataSetChanged();
+                for(int i = 0; i < listView.getChildCount(); i++)
+                {
+                    listView.getChildAt(i).setBackgroundColor(Color.WHITE);
+                }
+                listView.getChildAt(position).setBackgroundColor(Color.CYAN);
+            }
+        });
+
+        moneyView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                // adapter.notifyDataSetChanged();
+                for(int i = 0; i < listView.getChildCount(); i++)
+                {
+                    moneyView.getChildAt(i).setBackgroundColor(Color.WHITE);
+                }
+                moneyView.getChildAt(position).setBackgroundColor(Color.YELLOW);
+            }
+        });
 
 
 
