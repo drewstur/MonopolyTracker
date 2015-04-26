@@ -22,16 +22,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class gameInformation extends ActionBarActivity {
     ListView listView ;
     ListView moneyView;
-    Object payer, payee;
-    String currentPayer, payStatementOutput, amount;
-    boolean needPayer = true, needPayee = true;
-    Button pay;
-
+    Integer payer, payee;
+    String  payStatementOutput, amount;
+    boolean needPayer = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +41,7 @@ public class gameInformation extends ActionBarActivity {
         listView = (ListView) findViewById(R.id.list);
         moneyView = (ListView) findViewById(R.id.listView);
         Button payBtn = (Button) findViewById(R.id.button);
+        Button completeBtn = (Button) findViewById(R.id.button2);
 
         Intent intent = getIntent();
         String[] myStrings = intent.getStringArrayExtra("strings");
@@ -49,7 +49,7 @@ public class gameInformation extends ActionBarActivity {
         final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.list_item, R.id.textView, myStrings);
         listView.setAdapter(adapter);
 
-        Integer[] moneyTracker = new Integer[myStrings.length];
+        final Integer[] moneyTracker = new Integer[myStrings.length];
 
         for(int i = 0; i < moneyTracker.length-1; i++)
         {
@@ -59,7 +59,7 @@ public class gameInformation extends ActionBarActivity {
         moneyTracker[moneyTracker.length-2] = 0;
         moneyTracker[moneyTracker.length-1] = 50000;
 
-       ArrayAdapter<Integer> moneyAdapter = new ArrayAdapter<Integer>(this, R.layout.list_item, R.id.textView, moneyTracker);
+       final ArrayAdapter<Integer> moneyAdapter = new ArrayAdapter<Integer>(this, R.layout.list_item, R.id.textView, moneyTracker);
        moneyView.setAdapter(moneyAdapter);
 
         //set onclick listeners
@@ -70,15 +70,8 @@ public class gameInformation extends ActionBarActivity {
 
             //checking to see if this is payer or payee
                 if (needPayer) {
-                    // adapter.notifyDataSetChanged();
-                    /*
-                    for (int i = 0; i < listView.getChildCount(); i++) {
-                        listView.getChildAt(i).setBackgroundColor(Color.WHITE);
-                        moneyView.getChildAt(i).setBackgroundColor(Color.WHITE);
-                    } */
-
                     //set payer so we can transfer money though array later
-                    payer = listView.getItemAtPosition(position);
+                    payer = position;
 
                     //updating paystatement with payer
                     payStatementOutput = listView.getItemAtPosition(position).toString();
@@ -89,18 +82,12 @@ public class gameInformation extends ActionBarActivity {
                     moneyView.getChildAt(position).setBackgroundColor(Color.CYAN);
 
                 }else{
-                    /*
-                    for (int i = 0; i < listView.getChildCount(); i++) {
-                        listView.getChildAt(i).setBackgroundColor(Color.YELLOW);
-                        moneyView.getChildAt(i).setBackgroundColor(Color.YELLOW);
-                    } */
-
                     //changing payee background to yellow
                     listView.getChildAt(position).setBackgroundColor(Color.YELLOW);
                     moneyView.getChildAt(position).setBackgroundColor(Color.YELLOW);
 
                     //set payee to move funds later
-                    payee = listView.getItemAtPosition(position);
+                    payee = position;
 
                     //updating paystatement with payee
                     payStatementOutput = payStatementOutput+listView.getItemAtPosition(position).toString();
@@ -124,16 +111,47 @@ public class gameInformation extends ActionBarActivity {
                                 }
                             }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int whichButton) {
-                            // Do nothing.
-                            //if user clicked cancel should probably clear paystatement and set isPayer = 0 to completely restart process
+                            //change the views back to white background for next transaction
+                            for (int i = 0; i < listView.getChildCount(); i++) {
+                                listView.getChildAt(i).setBackgroundColor(Color.rgb(238, 238, 238));
+                                moneyView.getChildAt(i).setBackgroundColor(Color.rgb(238, 238, 238));
+                            }
+                            //clear transaction statement
+                            payStatementOutput = "";
+                            payStatement.setText(payStatementOutput);
+                            //clear amount
+                            amount = "0";
+                            //set payer true so we start the process over
+                            needPayer = true;
                         }
                     }).show();
-
-                    //need to put button listener for complete transaction
-                    //this is where we will change the funds between the users and reset the boolean to true and the paystatement to blank
                 }
             }
         });
+
+        completeBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                //change payer and payee values in the array
+                moneyTracker[payer] = moneyTracker[payer] - Integer.valueOf(amount);
+                moneyTracker[payee] = moneyTracker[payee] + Integer.valueOf(amount);
+                //change the views back to white background for next transaction
+                for (int i = 0; i < listView.getChildCount(); i++) {
+                    listView.getChildAt(i).setBackgroundColor(Color.rgb(238, 238, 238));
+                    moneyView.getChildAt(i).setBackgroundColor(Color.rgb(238, 238, 238));
+                }
+                //clear transaction statement
+                payStatementOutput = "";
+                payStatement.setText(payStatementOutput);
+                //clear amount
+                amount = "0";
+                //set payer true so we start the process over
+                needPayer = true;
+                //redraw the adapters to show changes in the players values
+                moneyAdapter.notifyDataSetChanged();
+                adapter.notifyDataSetChanged();
+            }
+        }
+        );
 
         payBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -145,33 +163,6 @@ public class gameInformation extends ActionBarActivity {
                 payStatement.setText(payStatementOutput);
             }
         });
-
-
-/*
-        moneyView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                // adapter.notifyDataSetChanged();
-                for(int i = 0; i < listView.getChildCount(); i++)
-                {
-                    moneyView.getChildAt(i).setBackgroundColor(Color.WHITE);
-                }
-                moneyView.getChildAt(position).setBackgroundColor(Color.YELLOW);
-            }
-        });
-*/
-
-
-//hello how u iz?
-        //does it work this time?
-//testing again
-//values[0] = "Test";
-//adapter.notifyDataSetChanged();
-
-
-// values[0] = "Test2";
-// adapter.notifyDataSetChanged();
     }
 
     @Override
