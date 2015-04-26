@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.TextureView;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -103,8 +104,10 @@ public class gameInformation extends ActionBarActivity {
 
                     //creating pop up input text for user
                     final EditText input = new EditText(gameInformation.this);
+
                     // set input keyboard to numerical only
                     input.setKeyListener(DigitsKeyListener.getInstance());
+
                     new AlertDialog.Builder(gameInformation.this)
                             .setTitle("Enter the amount owed.")
                             .setMessage(payStatementOutput)
@@ -117,7 +120,9 @@ public class gameInformation extends ActionBarActivity {
                                      payStatementOutput = payStatementOutput+" $"+amount;
                                      payStatement.setText(payStatementOutput);
                                 }
-                            }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            })
+
+                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int whichButton) {
                             //change the views back to white background for next transaction
                             for (int i = 0; i < listView.getChildCount(); i++) {
@@ -137,6 +142,7 @@ public class gameInformation extends ActionBarActivity {
                 }
             }
         });
+
 
         completeBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
