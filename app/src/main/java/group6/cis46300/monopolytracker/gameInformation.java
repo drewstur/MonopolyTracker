@@ -30,7 +30,7 @@ public class gameInformation extends ActionBarActivity {
     ListView moneyView;
     Integer payer, payee;
     String  payStatementOutput, amount;
-    boolean needPayer = true;
+    boolean needPayee, needPayer = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +44,7 @@ public class gameInformation extends ActionBarActivity {
         Button completeBtn = (Button) findViewById(R.id.button2);
 
         Intent intent = getIntent();
-        String[] myStrings = intent.getStringArrayExtra("strings");
+        final String[] myStrings = intent.getStringArrayExtra("strings");
 
         final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.list_item, R.id.textView, myStrings);
         listView.setAdapter(adapter);
@@ -70,6 +70,7 @@ public class gameInformation extends ActionBarActivity {
 
             //checking to see if this is payer or payee
                 if (needPayer) {
+                    payStatement.setText("");
                     //set payer so we can transfer money though array later
                     payer = position;
 
@@ -77,11 +78,18 @@ public class gameInformation extends ActionBarActivity {
                     payStatementOutput = listView.getItemAtPosition(position).toString();
                     payStatement.setText(payStatementOutput);
 
+                    //clear color incase switching payer
+                    for(int i = 0; i < listView.getChildCount(); i++)
+                    {
+                        listView.getChildAt(i).setBackgroundColor(Color.rgb(238, 238, 238));
+                        moneyView.getChildAt(i).setBackgroundColor(Color.rgb(238, 238, 238));
+                    }
                     //updating background of payer to cyan
                     listView.getChildAt(position).setBackgroundColor(Color.CYAN);
                     moneyView.getChildAt(position).setBackgroundColor(Color.CYAN);
 
-                }else{
+                }else if(needPayee){
+                    needPayee = false;
                     //changing payee background to yellow
                     listView.getChildAt(position).setBackgroundColor(Color.YELLOW);
                     moneyView.getChildAt(position).setBackgroundColor(Color.YELLOW);
@@ -123,6 +131,7 @@ public class gameInformation extends ActionBarActivity {
                             amount = "0";
                             //set payer true so we start the process over
                             needPayer = true;
+                            needPayee = true;
                         }
                     }).show();
                 }
@@ -131,24 +140,44 @@ public class gameInformation extends ActionBarActivity {
 
         completeBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //change payer and payee values in the array
-                moneyTracker[payer] = moneyTracker[payer] - Integer.valueOf(amount);
-                moneyTracker[payee] = moneyTracker[payee] + Integer.valueOf(amount);
-                //change the views back to white background for next transaction
-                for (int i = 0; i < listView.getChildCount(); i++) {
-                    listView.getChildAt(i).setBackgroundColor(Color.rgb(238, 238, 238));
-                    moneyView.getChildAt(i).setBackgroundColor(Color.rgb(238, 238, 238));
+                if(needPayer == false && needPayee == false)
+                if(moneyTracker[payer] - Integer.valueOf(amount) >= 0)
+                {
+                    //change payer and payee values in the array
+                    moneyTracker[payer] = moneyTracker[payer] - Integer.valueOf(amount);
+                    moneyTracker[payee] = moneyTracker[payee] + Integer.valueOf(amount);
+                    //change the views back to white background for next transaction
+                    for (int i = 0; i < listView.getChildCount(); i++) {
+                        listView.getChildAt(i).setBackgroundColor(Color.rgb(238, 238, 238));
+                        moneyView.getChildAt(i).setBackgroundColor(Color.rgb(238, 238, 238));
+                    }
+                    //clear transaction statement
+                    payStatementOutput = "";
+                    payStatement.setText(payStatementOutput);
+                    //clear amount
+                    amount = "0";
+                    //set payer true so we start the process over
+                    needPayer = true;
+                    needPayee = true;
+                    //redraw the adapters to show changes in the players values
+                    moneyAdapter.notifyDataSetChanged();
+                    adapter.notifyDataSetChanged();
                 }
-                //clear transaction statement
-                payStatementOutput = "";
-                payStatement.setText(payStatementOutput);
-                //clear amount
-                amount = "0";
-                //set payer true so we start the process over
-                needPayer = true;
-                //redraw the adapters to show changes in the players values
-                moneyAdapter.notifyDataSetChanged();
-                adapter.notifyDataSetChanged();
+                else{
+
+                    for (int i = 0; i < listView.getChildCount(); i++) {
+                        listView.getChildAt(i).setBackgroundColor(Color.rgb(238, 238, 238));
+                        moneyView.getChildAt(i).setBackgroundColor(Color.rgb(238, 238, 238));
+                    }
+
+                    payStatement.setText(myStrings[payer] + " does not have enough funds");
+                    //clear amount
+                    amount = "0";
+                    //set payer true so we start the process over
+                    needPayer = true;
+                    needPayee = true;
+                }
+
             }
         }
         );
@@ -158,9 +187,16 @@ public class gameInformation extends ActionBarActivity {
                 //set isPayer to false so we know that we don't need them to select a payer
                 //maybe add a way to check and make sure that a payer is set like if(payer.getText().toString().trim().length()) != 0)
                 //if nothing is selected send the back to make another selection
-                needPayer = false;
-                payStatementOutput = payStatementOutput+" will pay ";
-                payStatement.setText(payStatementOutput);
+
+                if( needPayer == true)
+                {
+                    needPayer = false;
+                    payStatementOutput = payStatementOutput + " will pay ";
+                    payStatement.setText(payStatementOutput);
+                    needPayee = true;
+                }
+
+
             }
         });
     }
