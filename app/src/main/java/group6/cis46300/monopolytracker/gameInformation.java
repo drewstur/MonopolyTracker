@@ -115,30 +115,57 @@ public class gameInformation extends ActionBarActivity {
                             .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int whichButton) {
                                     //set amount to be transfered
-                                     amount = input.getText().toString();
-                                    //update payStatement
-                                     payStatementOutput = payStatementOutput+" $"+amount;
-                                     payStatement.setText(payStatementOutput);
+
+                                        amount = input.getText().toString();
+                                        //update payStatement
+                                    if (!amount.equals(""))
+                                    {
+                                        payStatementOutput = payStatementOutput + " $" + amount;
+                                        payStatement.setText(payStatementOutput);
+                                    }
+                                    else
+                                    {
+                                        for (int i = 0; i < listView.getChildCount(); i++) {
+                                            listView.getChildAt(i).setBackgroundColor(Color.rgb(238, 238, 238));
+                                            moneyView.getChildAt(i).setBackgroundColor(Color.rgb(238, 238, 238));
+                                        }
+
+
+                                        //clear transaction statement
+                                        payStatementOutput = "";
+                                        payStatement.setText(payStatementOutput);
+                                        //clear amount
+                                        amount = "0";
+                                        //set payer true so we start the process over
+                                        needPayer = true;
+                                        needPayee = true;
+                                        payStatement.setText("Must enter a value");
+
+                                    }
                                 }
                             })
 
                             .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int whichButton) {
-                            //change the views back to white background for next transaction
-                            for (int i = 0; i < listView.getChildCount(); i++) {
-                                listView.getChildAt(i).setBackgroundColor(Color.rgb(238, 238, 238));
-                                moneyView.getChildAt(i).setBackgroundColor(Color.rgb(238, 238, 238));
-                            }
-                            //clear transaction statement
-                            payStatementOutput = "";
-                            payStatement.setText(payStatementOutput);
-                            //clear amount
-                            amount = "0";
-                            //set payer true so we start the process over
-                            needPayer = true;
-                            needPayee = true;
-                        }
-                    }).show();
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    //change the views back to white background for next transaction
+                                    for (int i = 0; i < listView.getChildCount(); i++) {
+                                        listView.getChildAt(i).setBackgroundColor(Color.rgb(238, 238, 238));
+                                        moneyView.getChildAt(i).setBackgroundColor(Color.rgb(238, 238, 238));
+                                    }
+
+
+                                    //clear transaction statement
+                                    payStatementOutput = "";
+                                    payStatement.setText(payStatementOutput);
+                                    //clear amount
+                                    amount = "0";
+                                    //set payer true so we start the process over
+                                    needPayer = true;
+                                    needPayee = true;
+
+
+                                }
+                            }).show();
                 }
             }
         });
@@ -146,7 +173,7 @@ public class gameInformation extends ActionBarActivity {
 
         completeBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if(needPayer == false && needPayee == false)
+               if(needPayer == false && needPayee == false)
                 if(moneyTracker[payer] - Integer.valueOf(amount) >= 0)
                 {
                     //change payer and payee values in the array
